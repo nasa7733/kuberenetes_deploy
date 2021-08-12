@@ -25,7 +25,7 @@ pipeline {
            steps {
                 
                 sh 'docker build -t samplewebapp:latest .' 
-                sh 'docker tag samplewebapp gcr.io/midevlab/javapp:latest'
+                sh 'docker tag samplewebapp ishaqmd/javapp:latest'
                	                 
           }
         }
@@ -35,7 +35,7 @@ pipeline {
              
             steps 
 			{
-                sh "docker run --name javaapp -d -p 8008:8080 gcr.io/midevlab/javapp"
+                sh "docker run --name javaapp -d -p 8008:8080 ishaqmd/javapp"
 				sh 'sleep 10'
 				
 				
