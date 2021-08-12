@@ -82,7 +82,8 @@ pipeline {
         steps {
             script {
                 docker.withRegistry('https://gcr.io', 'gcr:midevlab') {
-                    sh 'docker push gcr/midevlab/javapp'
+                    sh 'gcloud auth configure-docker'
+			sh 'docker push gcr/midevlab/javapp'
                 }
             }
         }
