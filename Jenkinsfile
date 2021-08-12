@@ -62,31 +62,17 @@ pipeline {
           }
         }
 	 
-	 //stage('Publish image to Docker Hub') {
+	stage('Publish image to Docker Hub') {
           
-           // steps {
+         steps {
         
-		//withCredentials([string(credentialsId: 'DOCKER_USER', variable: 'DOCKER_USER'), string(credentialsId: 'PASSWD', variable: 'DOCKER_PASSWORD')]) {
-            //sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
-              //sh  'docker push ishaqmd/javaapp:latest'
-          //}
-		  
-
-//}
-        
-                  
-          
-  //}
+	withCredentials([string(credentialsId: 'DOCKER_USER', variable: 'DOCKER_USER'), string(credentialsId: 'PASSWD', variable: 'DOCKER_PASSWORD')]) {
+          sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
+          sh  'docker push ishaqmd/javaapp:latest'
+          }
+ }
+   }
 	 
-	 stage('Push Image') {
-        steps {
-            script {
-                docker.withRegistry('https://gcr.io', 'gcr:midevlab') {
-                    sh 'gcloud auth configure-docker'
-			sh 'docker push gcr.io/midevlab/javapp'
-                }
-            }
-        }
-    }
+
     }
 	}
