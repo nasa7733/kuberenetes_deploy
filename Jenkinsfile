@@ -25,7 +25,7 @@ pipeline {
            steps {
                 
                 sh 'docker build -t samplewebapp:latest .' 
-                sh 'docker tag samplewebapp ishaqmd/javaapp:latest'
+                sh 'docker tag samplewebapp gcr/midevlab/javapp:latest'
                	                 
           }
         }
@@ -35,7 +35,7 @@ pipeline {
              
             steps 
 			{
-                sh "docker run --name javaapp -d -p 8008:8080 ishaqmd/javaapp"
+                sh "docker run --name javaapp -d -p 8008:8080 gcr/midevlab/javapp"
 				sh 'sleep 10'
 				
 				
@@ -62,20 +62,30 @@ pipeline {
           }
         }
 	 
-	 stage('Publish image to Docker Hub') {
+	 //stage('Publish image to Docker Hub') {
           
-            steps {
+           // steps {
         
-		withCredentials([string(credentialsId: 'DOCKER_USER', variable: 'DOCKER_USER'), string(credentialsId: 'PASSWD', variable: 'DOCKER_PASSWORD')]) {
-            sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
-              sh  'docker push ishaqmd/javaapp:latest'
-          }
+		//withCredentials([string(credentialsId: 'DOCKER_USER', variable: 'DOCKER_USER'), string(credentialsId: 'PASSWD', variable: 'DOCKER_PASSWORD')]) {
+            //sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
+              //sh  'docker push ishaqmd/javaapp:latest'
+          //}
 		  
 
-}
+//}
         
                   
           
-  }
+  //}
+	 
+	 stage('Push Image') {
+        steps {
+            script {
+                docker.withRegistry('https://gcr.io', 'gcr:midevlab') {
+                    sh 'docker push gcr/midevlab/javapp'
+                }
+            }
+        }
+    }
     }
 	}
