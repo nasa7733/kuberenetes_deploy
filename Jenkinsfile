@@ -25,7 +25,7 @@ pipeline {
            steps {
                 
                 sh 'docker build -t samplewebapp:latest .' 
-                sh 'docker tag samplewebapp gcr/midevlab/javapp:latest'
+                sh 'docker tag samplewebapp gcr.io/midevlab/javapp:latest'
                	                 
           }
         }
@@ -35,7 +35,7 @@ pipeline {
              
             steps 
 			{
-                sh "docker run --name javaapp -d -p 8008:8080 gcr/midevlab/javapp"
+                sh "docker run --name javaapp -d -p 8008:8080 gcr.io/midevlab/javapp"
 				sh 'sleep 10'
 				
 				
@@ -83,7 +83,7 @@ pipeline {
             script {
                 docker.withRegistry('https://gcr.io', 'gcr:midevlab') {
                     sh 'gcloud auth configure-docker'
-			sh 'docker push gcr/midevlab/javapp'
+			sh 'docker push gcr.io/midevlab/javapp'
                 }
             }
         }
