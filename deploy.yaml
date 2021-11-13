@@ -9,10 +9,10 @@ name: webapp-deployment
  selector:
   matchLabels:
    app: webapp
-	template:
-	metadata:
-	 labels:
-	 app: webapp
+template:
+metadata:
+labels:
+app: webapp
 spec:
 containers:
  - name: webapp
